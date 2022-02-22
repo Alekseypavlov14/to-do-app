@@ -1,23 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import { useViewport } from './hooks/useViewport';
+import { useEffect, useState } from 'react';
+import Container from './components/Container/Container';
 
 function App() {
+  useViewport()
+
+  const MAX_MOBILE_WIDTH = 500
+
+  const [colorTheme, setColorTheme] = useState(true)
+
+  useEffect(() => {
+    localStorage.setItem('colorTheme', colorTheme)
+  }, [colorTheme])
+
+  useEffect(() => {
+    setColorTheme(localStorage.getItem('colorTheme'))
+  }, [])
+
+  function computeImageSelector() {
+    const width = window.innerWidth
+
+    const device = width > MAX_MOBILE_WIDTH ? 'Desktop' : 'Mobile'
+
+    const selector = device + (colorTheme ? 'Dark' : 'Light')
+
+    return selector
+  }
+
+  const AppSelector = `App ${computeImageSelector()} ${(colorTheme ? 'Dark' : 'Light')}`
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={AppSelector}>
+      <Container theme={colorTheme} setTheme={setColorTheme} />
     </div>
   );
 }

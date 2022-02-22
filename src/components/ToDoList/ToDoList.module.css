@@ -1,0 +1,16 @@
+.ToDoList {
+    width: 100%;
+    height: 1px;
+    min-height: 350px;
+    border-radius: 7px;
+    margin-top: 20px;
+    transition: var(--transition-smooth);
+}
+
+.Dark {
+    background: var(--very-dark-desaturated-blue);
+}
+
+.Light {
+    background: var(--very-light-gray);
+}

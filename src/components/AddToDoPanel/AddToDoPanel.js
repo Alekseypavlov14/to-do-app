@@ -25,7 +25,7 @@ const AddToDoPanel = ({ theme, setTodos }) => {
                             isActive: true
                         }
 
-                        setTodos(prev => [todo].concat(prev))
+                        setTodos(prev => prev.concat([todo]))
                         e.target.value = ''
                         setCurrentTodo('')
                         return

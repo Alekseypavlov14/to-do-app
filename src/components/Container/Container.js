@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AddToDoPanel from '../AddToDoPanel/AddToDoPanel'
+import FilterPanel from '../FilterPanel/FilterPanel'
 import ThemeToggler from '../ThemeToggler/ThemeToggler'
 import Title from '../Title/Title'
 import ToDoList from '../ToDoList/ToDoList'
@@ -8,13 +9,21 @@ import styles from './Container.module.css'
 const Container = ({ theme, setTheme }) => {
     const [todos, setTodos] = useState([])
 
-    useEffect(() => {
-        localStorage.setItem('todos', todos)
-    }, [todos])
+    /* 
+        todo: {
+            text: String,
+            done: Boolean,
+        }
+    */
 
     useEffect(() => {
-        setTodos(localStorage.getItem('todos') || [])
+        const todos = localStorage.getItem('_todos')
+        setTodos(JSON.parse(todos) || [])
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem('_todos', JSON.stringify(todos))
+    }, [todos])
 
     return (
         <div className={styles.Container}>
@@ -25,7 +34,9 @@ const Container = ({ theme, setTheme }) => {
 
             <AddToDoPanel theme={theme} setTodos={setTodos} />
 
-            <ToDoList theme={theme} todos={todos} />
+            <ToDoList setTodos={setTodos} theme={theme} todos={todos} />
+
+            <FilterPanel theme={theme} setTodos={setTodos} />
         </div>
     )
 }

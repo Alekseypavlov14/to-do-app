@@ -33,6 +33,7 @@
     overflow-x: hidden;
     height: calc(100 * var(--vh));
     box-sizing: border-box;
+    padding-bottom: 30px;
     background-repeat: no-repeat;
     background-size: 100% 30%;
     display: flex;

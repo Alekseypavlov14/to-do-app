@@ -1,0 +1,22 @@
+.FilterPanel {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    margin-top: 15px;
+    transition: var(--transition-smooth);
+    box-sizing: border-box;
+    padding: 0px 20%;
+}
+
+.Dark {
+    background: var(--very-dark-desaturated-blue);
+    color: var(--very-dark-grayish-blue);
+}
+
+.Light {
+    background: var(--very-light-gray);
+    color: var(--dark-grayish-blue);
+}

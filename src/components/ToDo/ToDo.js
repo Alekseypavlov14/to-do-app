@@ -1,18 +1,44 @@
 import React, { useState } from 'react'
 import styles from './ToDo.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-const ToDo = ({ todo, theme }) => {
-    const [active, setActive] = useState(true)
+const ToDo = ({ todo, theme, setTodos, index }) => {
+    const [done, setDone] = useState(false)
 
     return (
         <div className={styles.ToDo + ' ' + (theme ? styles.Dark : styles.Light)}>
             <button
-                className={styles.Button + ' ' + (active ? styles.active : styles.done)}
-                onClick={() => setActive(prev => !prev)}
+                className={styles.Button + ' ' + (done ? styles.done : styles.active)}
+                onClick={() => {
+                    setDone(prev => !prev)
+                    setTodos(prev => {
+                        prev[index].isActive = false
+                        return prev
+                    })
+                }}
             >
-                {!active && "\u2713"}
+                { done && (<FontAwesomeIcon icon={ faCheck } />) }
             </button>
-            {todo.text}
+
+            <div
+                className={styles.Text + ' ' + (done && styles.doneTodoText)}
+                onClick={() => {
+                    setDone(prev => !prev)
+                    setTodos(prev => {
+                        prev[index].isActive = false
+                        return prev
+                    })
+                }}
+            >
+                {todo.text}
+            </div>
+
+            <button
+                className={styles.closeButton}
+            >
+                <FontAwesomeIcon icon={faXmark} />
+            </button>
         </div>
     )
 }

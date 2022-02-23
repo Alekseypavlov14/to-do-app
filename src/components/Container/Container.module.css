@@ -3,7 +3,7 @@
 .Container {
     width: 90%;
     max-width: 540px;
-    height: 600px;
+    height: 90%;
     box-sizing: border-box;
     transition: var(--transition-smooth);
     font-family: 'Josefin Sans', sans-serif;

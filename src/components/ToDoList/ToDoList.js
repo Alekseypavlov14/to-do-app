@@ -2,12 +2,14 @@ import React from 'react'
 import ToDo from '../ToDo/ToDo'
 import styles from './ToDoList.module.css'
 
-const ToDoList = ({ theme, todos, setTodos }) => {
+const ToDoList = ({ theme, todos, Todo }) => {
+    const ThemeSelector = theme ? styles.Dark : styles.Light
+
     return (
-        <div className={styles.ToDoList + ' ' + (theme ? styles.Dark : styles.Light)}>
+        <div className={styles.ToDoList + ' ' + ThemeSelector}>
             <div className={styles.ToDos}>
                 {todos.map((todo, index) => (
-                    <ToDo index={index} setTodos={setTodos} theme={theme} todo={todo} key={index} />
+                    <ToDo index={index} Todo={Todo} theme={theme} todo={todo} key={index} />
                 ))}
             </div>
 

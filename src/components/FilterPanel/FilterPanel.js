@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './FilterPanel.module.css'
 
-const FilterPanel = ({ theme, setFilteredTodos }) => {
-    const [filterType, setFilterType] = useState(0)
+const FilterPanel = ({ theme }) => {
+    const [currentFilterType, setCurrentFilterType] = useState(0)
 
     const AllRef = useRef(null)
     const ActiveRef = useRef(null)
@@ -13,35 +13,34 @@ const FilterPanel = ({ theme, setFilteredTodos }) => {
     ]
 
     useEffect(() => {
-        refs.forEach(ref => ref.current.style.color = (theme ? 'var(--very-dark-grayish-blue)' : 'var(--dark-grayish-blue)'))
-        refs[filterType].current.style.color = 'var(--bright-blue)'
-    }, [filterType])
+        const defaultColor = theme ? 'var(--very-dark-grayish-blue)' : 'var(--dark-grayish-blue)'
+        const activeColor = 'var(--bright-blue)'
+
+        refs.forEach(ref => ref.current.style.color = defaultColor)
+        refs[currentFilterType].current.style.color = activeColor
+    }, [currentFilterType])
 
     return (
         <div className={styles.FilterPanel + ' ' + (theme ? styles.Dark : styles.Light)}>
             <div 
                 onClick={() => {
-                    setFilterType(0)
-                    setFilteredTodos(prev => {
-                        return prev.filter(todo => true)
-                    })
+                    setCurrentFilterType(0)
                 }} ref={AllRef} 
                 className={styles.All + ' ' + styles.Selector}
             >
                 All
             </div>
+
             <div 
                 onClick={() => {
-                    setFilterType(1)
-                    setFilteredTodos(prev => {
-                        return prev.filter(todo => todo.isActive === false)
-                    })
+                    setCurrentFilterType(1)
                 }} ref={ActiveRef} 
                 className={styles.Active + ' ' + styles.Selector}
             >
                 Active
             </div>
-            <div onClick={() => setFilterType(2)} ref={CompletedRef} className={styles.Completed + ' ' + styles.Selector}>
+
+            <div onClick={() => setCurrentFilterType(2)} ref={CompletedRef} className={styles.Completed + ' ' + styles.Selector}>
                 Completed
             </div>
         </div>

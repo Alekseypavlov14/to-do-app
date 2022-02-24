@@ -28,7 +28,8 @@ function App() {
     return selector
   }
 
-  const AppSelector = `App ${computeImageSelector()} ${(colorTheme ? 'Dark' : 'Light')}`
+  const ThemeSelector = colorTheme ? 'Dark' : 'Light'
+  const AppSelector = `App ${computeImageSelector()} ${ThemeSelector}`
 
   return (
     <div className={AppSelector}>

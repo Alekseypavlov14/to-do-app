@@ -9,11 +9,35 @@ import styles from './Container.module.css'
 const Container = ({ theme, setTheme }) => {
     const [todos, setTodos] = useState([])
 
+    class TodoScheme {
+        add(newTodo) {
+            setTodos(todos => todos.concat([newTodo]))
+        }
+
+        remove(index) {
+            setTodos(todos => {
+                todos.splice(index, 1)
+                return todos
+            })
+        }
+
+        async finish(index) {
+            await setTodos(todos => {
+                todos[index].done = true
+                return todos
+            })
+        }
+    }
+
+    const Todo = new TodoScheme()
+
+    // get todos
     useEffect(() => {
         const todos = localStorage.getItem('_todos')
         setTodos(JSON.parse(todos) || [])
     }, [])
 
+    // save todos
     useEffect(() => {
         localStorage.setItem('_todos', JSON.stringify(todos))
     }, [todos])
@@ -25,11 +49,11 @@ const Container = ({ theme, setTheme }) => {
                 <ThemeToggler theme={theme} setTheme={setTheme} />
             </div>
 
-            <AddToDoPanel theme={theme} setTodos={setTodos} />
+            <AddToDoPanel theme={theme} Todo={Todo} />
 
-            <ToDoList setTodos={setTodos} theme={theme} todos={todos} />
+            <ToDoList setTodos={setTodos} theme={theme} todos={todos}  Todo={Todo}/>
 
-            <FilterPanel todos={todos} theme={theme} setTodos={setTodos} />
+            <FilterPanel theme={theme} />
         </div>
     )
 }

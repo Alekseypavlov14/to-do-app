@@ -1,31 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './AddToDoPanel.module.css'
 
-const AddToDoPanel = ({ theme, setTodos }) => {
+const AddToDoPanel = ({ theme, setTodos, Todo }) => {
     const [currentTodo, setCurrentTodo] = useState('')
-    const InputRef = useRef(null)
 
-    useEffect(() => {
-        InputRef.current.value = currentTodo
-    }, [currentTodo])
+    const ThemeSelector = theme ? styles.Dark : styles.Light
 
     return (
-        <div className={styles.AddToDoPanel + ' ' + (theme ? styles.Dark : styles.Light)}>
+        <div className={styles.AddToDoPanel + ' ' + ThemeSelector}>
             <input 
                 type='text' 
-                ref={InputRef}
                 placeholder='Create a new todo' 
                 className={styles.input} 
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         if ( !(/\w/.test(e.target.value)) ) return 
 
-                        const todo = {
+                        Todo.add({
                             text: currentTodo,
-                            isActive: true
-                        }
-
-                        setTodos(prev => prev.concat([todo]))
+                            done: false
+                        })
+                        
                         e.target.value = ''
                         setCurrentTodo('')
                         return

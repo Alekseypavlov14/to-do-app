@@ -3,33 +3,29 @@ import styles from './ToDo.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-const ToDo = ({ todo, theme, setTodos, index }) => {
+const ToDo = ({ todo, theme, Todo, index }) => {
     const [done, setDone] = useState(false)
 
+    async function finishTaskHandler() {
+        await setDone(prev => !prev)
+        await Todo.finish(index)
+    }
+
+    const ThemeSelector = theme ? styles.Dark : styles.Light
+    const DoneSelector = done ? styles.done : styles.active
+
     return (
-        <div className={styles.ToDo + ' ' + (theme ? styles.Dark : styles.Light)}>
+        <div className={styles.ToDo + ' ' + ThemeSelector}>
             <button
-                className={styles.Button + ' ' + (done ? styles.done : styles.active)}
-                onClick={() => {
-                    setDone(prev => !prev)
-                    setTodos(prev => {
-                        prev[index].isActive = false
-                        return prev
-                    })
-                }}
+                className={styles.Button + ' ' + DoneSelector}
+                onClick={finishTaskHandler}
             >
                 { done && (<FontAwesomeIcon icon={ faCheck } />) }
             </button>
 
             <div
                 className={styles.Text + ' ' + (done && styles.doneTodoText)}
-                onClick={() => {
-                    setDone(prev => !prev)
-                    setTodos(prev => {
-                        prev[index].isActive = false
-                        return prev
-                    })
-                }}
+                onClick={finishTaskHandler}
             >
                 {todo.text}
             </div>
@@ -37,11 +33,7 @@ const ToDo = ({ todo, theme, setTodos, index }) => {
             <button
                 className={styles.closeButton}
                 onClick={() => {
-                    console.log('hello')
-                    setTodos(prev => {
-                        prev.splice(index, 1)
-                        return prev
-                    })
+                    Todo.finish(index)
                 }}
             >
                 <FontAwesomeIcon icon={faXmark} />

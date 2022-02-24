@@ -33,8 +33,10 @@
 
 .Dark {
     background: var(--very-dark-desaturated-blue);
+    box-shadow: 0px 2px 7px black;
 }
 
 .Light {
     background: var(--very-light-gray);
+    box-shadow: 0px 2px 7px var(--very-dark-grayish-blue);
 }

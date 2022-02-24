@@ -36,6 +36,13 @@ const ToDo = ({ todo, theme, setTodos, index }) => {
 
             <button
                 className={styles.closeButton}
+                onClick={() => {
+                    console.log('hello')
+                    setTodos(prev => {
+                        prev.splice(index, 1)
+                        return prev
+                    })
+                }}
             >
                 <FontAwesomeIcon icon={faXmark} />
             </button>

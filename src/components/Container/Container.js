@@ -9,13 +9,6 @@ import styles from './Container.module.css'
 const Container = ({ theme, setTheme }) => {
     const [todos, setTodos] = useState([])
 
-    /* 
-        todo: {
-            text: String,
-            done: Boolean,
-        }
-    */
-
     useEffect(() => {
         const todos = localStorage.getItem('_todos')
         setTodos(JSON.parse(todos) || [])
@@ -36,7 +29,7 @@ const Container = ({ theme, setTheme }) => {
 
             <ToDoList setTodos={setTodos} theme={theme} todos={todos} />
 
-            <FilterPanel theme={theme} setTodos={setTodos} />
+            <FilterPanel todos={todos} theme={theme} setTodos={setTodos} />
         </div>
     )
 }

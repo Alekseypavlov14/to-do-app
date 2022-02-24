@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './FilterPanel.module.css'
 
-const FilterPanel = ({ theme, setTodos }) => {
+const FilterPanel = ({ theme, setFilteredTodos }) => {
     const [filterType, setFilterType] = useState(0)
 
     const AllRef = useRef(null)
@@ -19,13 +19,29 @@ const FilterPanel = ({ theme, setTodos }) => {
 
     return (
         <div className={styles.FilterPanel + ' ' + (theme ? styles.Dark : styles.Light)}>
-            <div onClick={() => setFilterType(0)} ref={AllRef} className={styles.All + ' ' + styles.Selector}>
+            <div 
+                onClick={() => {
+                    setFilterType(0)
+                    setFilteredTodos(prev => {
+                        return prev.filter(todo => true)
+                    })
+                }} ref={AllRef} 
+                className={styles.All + ' ' + styles.Selector}
+            >
                 All
             </div>
-            <div onClick={() => setFilterType(1)} ref={ActiveRef} className={styles.Active}>
+            <div 
+                onClick={() => {
+                    setFilterType(1)
+                    setFilteredTodos(prev => {
+                        return prev.filter(todo => todo.isActive === false)
+                    })
+                }} ref={ActiveRef} 
+                className={styles.Active + ' ' + styles.Selector}
+            >
                 Active
             </div>
-            <div onClick={() => setFilterType(2)} ref={CompletedRef} className={styles.Completed}>
+            <div onClick={() => setFilterType(2)} ref={CompletedRef} className={styles.Completed + ' ' + styles.Selector}>
                 Completed
             </div>
         </div>
